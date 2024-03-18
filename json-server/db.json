@@ -3,6 +3,7 @@
         {
             "id": 1,
             "fruite": "Grapes",
+            "additional":"Fresh",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
             "image": "img/fruite-item-5.jpg"
@@ -10,6 +11,7 @@
         {
             "id": 2,
             "fruite": "Grapes",
+            "additional":"Expired",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
             "image": "img/fruite-item-5.jpg"
@@ -17,13 +19,15 @@
         {
             "id": 3,
             "fruite": "Raspberries",
+            "additional":"Discount",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
+            "price": 8,
             "image": "img/fruite-item-2.jpg"
         },
         {
             "id": 4,
             "fruite": "Apricots",
+            "additional":"Discount",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
             "image": "img/fruite-item-4.jpg"
@@ -31,13 +35,15 @@
         {
             "id": 5,
             "fruite": "Banana",
+            "additional":"Fresh",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
+            "price": 7,
             "image": "img/fruite-item-3.jpg"
         },
         {
             "id": 6,
             "fruite": "Oranges",
+            "additional":"Sales",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
             "image": "img/fruite-item-1.jpg"
@@ -45,13 +51,15 @@
         {
             "id": 7,
             "fruite": "Raspberries",
+            "additional":"Fresh",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
+            "price": 9,
             "image": "img/fruite-item-2.jpg"
         },
         {
             "id": 8,
             "fruite": "Grapes",
+            "additional":"Organic",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
             "image": "img/fruite-item-1.jpg"

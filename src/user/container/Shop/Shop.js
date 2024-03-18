@@ -3,20 +3,54 @@ import { Link } from 'react-router-dom';
 
 function Shop(props) {
     const [fruitData, setFruitData] = useState([]);
-
+    const [price, setPrice] = useState(0)
+    const [additional,setAdditional] = useState([])
+    let finalData
+    console.log(additional);
     const getData = async () => {
         try {
             const respones = await fetch("http://localhost:8000/fruites")
             const data = await respones.json()
-            setFruitData(data)
+            finalData = data
+            setFruitData(finalData)
         } catch (error) {
             alert(error.message)
         }
     }
 
+    const hendalprice = async () => {
+        const respones = await fetch("http://localhost:8000/fruites")
+        const data = await respones.json()
+        finalData = data
+        finalData = finalData.filter((v) => {
+            if (parseInt(price) <= 5) {
+                return v.price < parseInt(price)
+            } else  if (parseInt(price) >= 6) {
+                return v.price > parseInt(price)
+            } 
+           
+        })
+
+        setFruitData(finalData);
+        // console.log(parseInt(price));
+    }
+    const hendalbevrage =async () => {
+        const respones = await fetch("http://localhost:8000/fruites")
+        const data = await respones.json()
+        finalData = data
+
+        finalData = finalData.filter((v) => {
+           if (additional === "Organic") {
+            return v.additional
+           }
+        })
+        setFruitData(finalData);
+    }
     useEffect(() => {
         getData()
     }, [])
+
+    // console.log(price);
     return (
         <div>
             {/* Modal Search Start */}
@@ -116,31 +150,32 @@ function Shop(props) {
                                         <div className="col-lg-12">
                                             <div className="mb-3">
                                                 <h4 className="mb-2">Price</h4>
-                                                <input type="range" className="form-range w-100" id="rangeInput" name="rangeInput" min={0} max={500} defaultValue={0} oninput="amount.value=rangeInput.value" />
-                                                <output id="amount" name="amount" min-velue={0} max-value={500} htmlFor="rangeInput">0</output>
+                                                <input type="range" onClick={hendalprice} onChange={(event) => setPrice(event.target.value)} className="form-range w-100" id="rangeInput" name="rangeInput" min={0} max={10} defaultValue={0} oninput="amount.value=rangeInput.value" />
+                                                <output id="amount" name="amount" min-velue={0} max-value={10} htmlFor="rangeInput">{price}</output>
+
                                             </div>
                                         </div>
                                         <div className="col-lg-12">
                                             <div className="mb-3">
                                                 <h4>Additional</h4>
                                                 <div className="mb-2">
-                                                    <input type="radio" className="me-2" id="Categories-1" name="Categories-1" defaultValue="Beverages" />
+                                                    <input type="radio" className="me-2" id="Categories-1" name="Categories-1" defaultValue="Organic" onClick={hendalbevrage} onClick={(event) => setAdditional(event.target.value)}/>
                                                     <label htmlFor="Categories-1"> Organic</label>
                                                 </div>
                                                 <div className="mb-2">
-                                                    <input type="radio" className="me-2" id="Categories-2" name="Categories-1" defaultValue="Beverages" />
+                                                    <input type="radio" className="me-2" id="Categories-2" name="Categories-1" defaultValue="Fresh" onClick={(event) => setAdditional(event.target.value)}/>
                                                     <label htmlFor="Categories-2"> Fresh</label>
                                                 </div>
                                                 <div className="mb-2">
-                                                    <input type="radio" className="me-2" id="Categories-3" name="Categories-1" defaultValue="Beverages" />
+                                                    <input type="radio" className="me-2" id="Categories-3" name="Categories-1" defaultValue="Sales" onClick={(event) => setAdditional(event.target.value)}/>
                                                     <label htmlFor="Categories-3"> Sales</label>
                                                 </div>
                                                 <div className="mb-2">
-                                                    <input type="radio" className="me-2" id="Categories-4" name="Categories-1" defaultValue="Beverages" />
+                                                    <input type="radio" className="me-2" id="Categories-4" name="Categories-1" defaultValue="Discount" onClick={(event) => setAdditional(event.target.value)}/>
                                                     <label htmlFor="Categories-4"> Discount</label>
                                                 </div>
                                                 <div className="mb-2">
-                                                    <input type="radio" className="me-2" id="Categories-5" name="Categories-1" defaultValue="Beverages" />
+                                                    <input type="radio" className="me-2" id="Categories-5" name="Categories-1" defaultValue="Expired" onClick={(event) => setAdditional(event.target.value)}/>
                                                     <label htmlFor="Categories-5"> Expired</label>
                                                 </div>
                                             </div>
@@ -232,7 +267,7 @@ function Shop(props) {
                                                             <div className="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                 <h4>{v.fruite}</h4>
                                                                 <p>{v.description}</p>
-                                                                <div className="d-flex justify-content-between flex-lg-wrap">
+                                                                <div className="d-flex d-block justify-content-between flex-lg-wrap">
                                                                     <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
                                                                     <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
                                                                 </div>

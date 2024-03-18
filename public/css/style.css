@@ -495,3 +495,9 @@
 }
 /*** Footer End ***/
 
+.text-dark {
+    display: block !important;
+}
+.d-block {
+    display: block !important;
+}
