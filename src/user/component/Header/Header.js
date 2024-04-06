@@ -40,7 +40,7 @@ function Header(props) {
                                         <a href="404.html" className="dropdown-item">404 Page</a>
                                     </div>
                                 </div>
-                                <a href="contact.html" className="nav-item nav-link">Contact</a>
+                                <NavLink to="/contact" className="nav-item nav-link">Contact</NavLink>
                             </div>
                             <div className="d-flex m-3 me-0">
                                 <button className="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i className="fas fa-search text-primary" /></button>

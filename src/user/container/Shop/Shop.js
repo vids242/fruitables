@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function Shop(props) {
-    const [fruitData, setFruitData] = useState([]);
-
-    const getData = async () => {
-        try {
-            const respones = await fetch("http://localhost:8000/fruites")
-            const data = await respones.json()
-            setFruitData(data)
-        } catch (error) {
-            alert(error.message)
-        }
-    }
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        getData()
+        dispatch()
     }, [])
     return (
         <div>
