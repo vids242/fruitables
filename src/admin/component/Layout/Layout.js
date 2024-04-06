@@ -19,6 +19,8 @@ import ListItemText from '@mui/material/ListItemText';
 import AppleIcon from '@mui/icons-material/Apple';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import { NavLink } from 'react-router-dom';
+import CategoryIcon from '@mui/icons-material/Category';
+import WarehouseIcon from '@mui/icons-material/Warehouse';
 
 
 const drawerWidth = 240;
@@ -90,11 +92,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 let adminlink = [
-  {title : "Products",icon : <AppleIcon/>,to:"/admin/product"},
-  {title : "Reviews",icon : <ReviewsIcon/>,to:"/admin/review"}
+  { title: "Products", icon: <AppleIcon />, to: "/admin/product" },
+  { title: "Reviews", icon: <ReviewsIcon />, to: "/admin/review" },
+  { title: "Category", icon: <CategoryIcon />, to: "/admin/category" },
+  { title: "Facilites", icon: <WarehouseIcon />, to: "/admin/facilites" }
+
 ]
 
-export default function Layout({children}) {
+export default function Layout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -124,7 +129,7 @@ export default function Layout({children}) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            Mini variant drawer VI
           </Typography>
         </Toolbar>
       </AppBar>
@@ -138,11 +143,11 @@ export default function Layout({children}) {
         <List>
           {adminlink.map((value, index) => (
             <ListItem key={index}
-             disablePadding 
-             sx={{ display: 'block' }}
-             component={NavLink}
-             to={value.to}
-             >
+              disablePadding
+              sx={{ display: 'block' }}
+              component={NavLink}
+              to={value.to}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -165,7 +170,7 @@ export default function Layout({children}) {
           ))}
         </List>
         <Divider />
-       
+
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

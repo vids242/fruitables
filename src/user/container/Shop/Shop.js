@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import { get_shopdata } from '../../../redux/action/shop.action';
 
 function Shop(props) {
-    const [fruitData, setFruitData] = useState([]);
-
-    const getData = async () => {
-        try {
-            const respones = await fetch("http://localhost:8000/fruites")
-            const data = await respones.json()
-            setFruitData(data)
-        } catch (error) {
-            alert(error.message)
-        }
-    }
+    const dispatch = useDispatch()
+    const shopData = useSelector(state => state.shops)
+    console.log(shopData);
 
     useEffect(() => {
-        getData()
+        dispatch(get_shopdata())
     }, [])
     return (
         <div>
@@ -221,7 +215,7 @@ function Shop(props) {
                                 <div className="col-lg-9">
                                     <div className="row g-4 justify-content-center">
                                         {
-                                            fruitData.map((v) => (
+                                            shopData.shop.map((v) => (
                                                 <div className="col-md-6 col-lg-6 col-xl-4">
                                                     <Link to={`/Shop/${v.id}`}>
                                                         <div className="rounded position-relative fruite-item">

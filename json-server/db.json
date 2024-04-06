@@ -56,5 +56,89 @@
             "price": 4.99,
             "image": "img/fruite-item-1.jpg"
         }
-     ]
+    ],
+    "product": [
+        {
+            "id": 1,
+            "name": "Grapes",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+            "price": 4.99,
+            "image": "img/fruite-item-5.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Grapes",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+            "price": 8.99,
+            "image": "img/fruite-item-5.jpg"
+        },
+        {
+            "id": 3,
+            "name": "Raspberries",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+            "price": 4.99,
+            "image": "img/fruite-item-2.jpg"
+        },
+        {
+            "id": 4,
+            "name": "Apricots",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+            "price": 5.99,
+            "image": "img/fruite-item-4.jpg"
+        },
+        {
+            "id": 5,
+            "name": "Banana",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+            "price": 4.99,
+            "image": "img/fruite-item-3.jpg"
+        },
+        {
+            "id": 6,
+            "name": "Oranges",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+            "price": 7.99,
+            "image": "img/fruite-item-1.jpg"
+        },
+        {
+            "id": 7,
+            "name": "Raspberries",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+            "price": 4.99,
+            "image": "img/fruite-item-2.jpg"
+        },
+        {
+            "id": 8,
+            "name": "Grapes",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+            "price": 8.99,
+            "image": "img/fruite-item-1.jpg"
+        }
+    ],
+    "reviewe" : [
+        {
+            "name":"mahes shas",
+            "email":"mahes21@gmail.com",
+            "review" : "Its very healthy for human",
+            "rating" : 3
+        },
+        {
+            "name":"amit mehta",
+            "email":"amit21@gmail.com",
+            "review" : "its really naturel",
+            "rating" : 8
+        },
+        {
+            "name":"vraj patel",
+            "email":"vraj21@gmail.com",
+            "review" : "test was very testy",
+            "rating" : 5
+        },
+        {
+            "name":"janvi mehta",
+            "email":"janvi21@gmail.com",
+            "review" : "not bed",
+            "rating" : 2
+        }
+    ]
 }

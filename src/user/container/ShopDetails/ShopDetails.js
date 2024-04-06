@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { getreview } from '../../../redux/action/shopdetails.action';
+
 function ShopDetails(props) {
-    const {id} = useParams()
+    const { id } = useParams()
     // console.log(id);
-    
+    const dispatch = useDispatch()
+    const review = useSelector(state => state.review)
+    console.log(review.reviews);
+
+    useEffect(() => {
+        dispatch(getreview())
+    }, [])
+
+
+
     return (
         <div>
             {/* Modal Search Start */}
@@ -393,6 +405,23 @@ function ShopDetails(props) {
                             </div>
                         </div>
                     </div>
+                    <>
+                        <h4>Reviewe</h4>
+                        {
+                            review.reviews.map((v) => (
+                                <div >
+                                    <div className='reviewe'>
+                                        <h4>{v.name}</h4>
+                                        <h5>{v.email}</h5>
+                                        <p>{v.review}</p>
+                                        <h2>{v.rating}</h2>
+                                    </div>
+
+                                </div>
+
+                            ))
+                        }
+                    </>
                     <h1 className="fw-bold mb-0">Related products</h1>
                     <div className="vesitable">
                         <div className="owl-carousel vegetable-carousel justify-content-center">

@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import Shop from '../user/container/Shop/Shop';
 import ShopDetails from '../user/container/ShopDetails/ShopDetails';
 import PrivateRoute from './PrivateRoute';
+import Contact from '../user/container/Contact/Contact';
 
 function UserRouter(props) {
     return (
@@ -17,7 +18,7 @@ function UserRouter(props) {
                     <Route exact path="/Shop" element={<Shop />} />
                     <Route exact path="/Shop/:id" element={<ShopDetails />} />
                 </Route>
-
+            <Route path='/contact' element={<Contact/>} />
 
             </Routes>
             <Footer />
