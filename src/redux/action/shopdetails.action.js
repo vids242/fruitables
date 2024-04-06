@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { baseURL } from '../../utils/baseURL';
-import { GET_SHOPDATA } from '../ActionType';
+import { GET_REVIEWE } from '../ActionType';
 
-export const get_shopdata = () =>async (dispatch) => {
+export const getreview = () => (dispatch) => {
     try {
-        await axios.get(baseURL + "fruites")
+        axios.get(baseURL + "reviewe")
         .then((responses) => {
-            dispatch({type :GET_SHOPDATA,payload : responses.data})
+            dispatch({type : GET_REVIEWE,payload:responses.data})
         })
         .catch ((error) => {
             alert(error)
