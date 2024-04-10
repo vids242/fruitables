@@ -13,10 +13,12 @@ import { object, string, number, date, InferType } from 'yup';
 
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { getproduct } from '../../../redux/action/products.action';
+import { deleteprodact, getproduct } from '../../../redux/action/products.action';
 
 import { Spinner } from 'reactstrap';
-
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 export default function Product() {
@@ -55,11 +57,19 @@ export default function Product() {
     },
     validationSchema: productSchema,
     onSubmit: (values, { resetForm }) => {
+
+
       resetForm();
       handleClose();
     },
   });
 
+  const hendalEdit = () => {
+
+  }
+  const hendalDelete = (id) => {
+    dispatch(deleteprodact(id))
+  }
 
   const { handleSubmit, handleChange, handleBlur, values, touched, errors } = formik;
 
@@ -67,6 +77,24 @@ export default function Product() {
     { field: 'name', headerName: 'Name', width: 70 },
     { field: 'description', headerName: 'Description', width: 130 },
     { field: 'price', headerName: 'Price', width: 130 },
+    {
+      field: 'Action',
+      headerName: 'Action',
+      width: 130,
+      renderCell: (params) => (
+          <>
+              <IconButton aria-label="edit" onClick={() => hendalEdit(params.row)}>
+                  <EditIcon />
+              </IconButton>
+              <IconButton aria-label="delete" onClick={() => hendalDelete(params.row.id)} >
+                  <DeleteIcon />
+              </IconButton>
+          </>
+      )
+
+
+  },
+
 
   ];
 
