@@ -3,11 +3,9 @@ import { useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getreview } from '../../../redux/action/shopdetails.action';
-
-
 import { object, string } from 'yup';
-
 import { useFormik } from 'formik';
+
 
 function ShopDetails(props) {
     const { id } = useParams()

@@ -8,12 +8,11 @@ import { useFormik } from 'formik';
 import { object, string, number, date, InferType } from 'yup';
 // import { addReview } from '../../../redux/action/review.action';
 import { useDispatch, useSelector } from 'react-redux';
-import { getReview } from '../../../redux/action/review.action';
-// import { addReview, getReview } from '../../../redux/action/review.action';
-// import { Padding } from '@mui/icons-material';
+import { addReview, getReview } from '../../../redux/action/review.action';
+import { Padding } from '@mui/icons-material';
 
-function Review(props) {
 
+function Reviewse(props) {
     const dispatch = useDispatch()
 
     let reviewSchema = object({
@@ -68,7 +67,7 @@ function Review(props) {
 
     }
     const handleDelet = (id) => {
-
+console.log('fdfvgg');
     }
 
 
@@ -160,4 +159,4 @@ function Review(props) {
     );
 }
 
-export default Review;
+export default Reviewse;

@@ -8,7 +8,11 @@ import Shop from '../user/container/Shop/Shop';
 import PrivateRoute from './PrivateRoute';
 import Contact from '../user/container/Contact/Contact';
 import ShopDetails from '../user/container/ShopDetails/ShopDetails';
+// import Review from '../admin/container/Review/Review';
+// import { Reviews } from '@mui/icons-material';
+import Reviewse from '../user/container/Review/Reviewse';
 import Review from '../user/container/Review/Review';
+
 
 function UserRouter(props) {
     return (
@@ -19,7 +23,8 @@ function UserRouter(props) {
                 <Route element={<PrivateRoute />}>
                     <Route exact path="/Shop" element={<Shop />} />
                     <Route exact path="/Shop/:id" element={<ShopDetails />} />
-                    <Route exact path="/Reviews" element={<Review />} />  
+                    <Route exact path="/Reviewse/:id" element={<Reviewse />} />  
+                    {/* <Route exact path="/new:id" element={<Review />} />   */}
                 </Route>
             <Route path='/contact' element={<Contact/>} />
 
