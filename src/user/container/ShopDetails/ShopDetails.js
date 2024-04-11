@@ -1,21 +1,72 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getreview } from '../../../redux/action/shopdetails.action';
+
+import { object, string } from 'yup';
+
+import { useFormik } from 'formik';
+
+import { DataGrid } from '@mui/x-data-grid';
 
 function ShopDetails(props) {
     const { id } = useParams()
     // console.log(id);
     const dispatch = useDispatch()
+
+
+    const [fruits, setFruits] = useState([]);
+    console.log(fruits)
+
+
     const review = useSelector(state => state.review)
-    console.log(review.reviews);
+    // console.log(review.reviews);
+
+
+
+    const getData = async () => {
+
+        try {
+
+            const response = await fetch("http://localhost:8000/fruites");
+            const data = await response.json()
+
+
+            const ans = data.find((v) => v.id === id)
+            console.log(ans);
+            setFruits(ans)
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+
 
     useEffect(() => {
-        dispatch(getreview())
+        getData()
     }, [])
 
 
+    let reviewSchema = object({
+        name: string().required(),
+        email: string().required(),
+        review: string().required()
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            name: "",
+            email: "",
+            review: ""
+        },
+        validationSchema: reviewSchema,
+
+        onSubmit: values => {
+            console.log(values);
+        },
+    });
+
+    const { handleBlur, handleChange, handleSubmit, errors, values, touched } = formik
 
     return (
         <div>
@@ -56,14 +107,14 @@ function ShopDetails(props) {
                                 <div className="col-lg-6">
                                     <div className="border rounded">
                                         <a href="#">
-                                            <img src="img/single-item.jpg" className="img-fluid rounded" alt="Image" />
+                                            <img src={`../${fruits.image}`} className="img-fluid rounded" alt="Image" />
                                         </a>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
-                                    <h4 className="fw-bold mb-3">Brocoli</h4>
+                                    <h4 className="fw-bold mb-3">{fruits.fruite}</h4>
                                     <p className="mb-3">Category: Vegetables</p>
-                                    <h5 className="fw-bold mb-3">3,35 $</h5>
+                                    <h5 className="fw-bold mb-3">${fruits.price}</h5>
                                     <div className="d-flex mb-4">
                                         <i className="fa fa-star text-secondary" />
                                         <i className="fa fa-star text-secondary" />
@@ -194,22 +245,42 @@ function ShopDetails(props) {
                                         </div>
                                     </div>
                                 </div>
-                                <form action="#">
+
+                                <form onSubmit={handleSubmit}>
+
                                     <h4 className="mb-5 fw-bold">Leave a Reply</h4>
                                     <div className="row g-4">
                                         <div className="col-lg-6">
                                             <div className="border-bottom rounded">
-                                                <input type="text" className="form-control border-0 me-4" placeholder="Yur Name *" />
+                                                <input type="text" className="form-control border-0 me-4" placeholder="Your Name *"
+                                                    name="name"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.name}
+                                                />
+                                                {errors.name && touched.name ? <span style={{ color: "red" }}>{errors.name}</span> : null}
                                             </div>
                                         </div>
                                         <div className="col-lg-6">
                                             <div className="border-bottom rounded">
-                                                <input type="email" className="form-control border-0" placeholder="Your Email *" />
+                                                <input type="email" className="form-control border-0" placeholder="Your Email *"
+                                                    name="email"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.email}
+                                                />
+                                                {errors.email && touched.email ? <span style={{ color: "red" }}>{errors.email}</span> : null}
                                             </div>
                                         </div>
                                         <div className="col-lg-12">
                                             <div className="border-bottom rounded my-4">
-                                                <textarea name id className="form-control border-0" cols={30} rows={8} placeholder="Your Review *" spellCheck="false" defaultValue={""} />
+                                                <textarea id className="form-control border-0" cols={30} rows={8} placeholder="Your Review *" spellCheck="false" defaultValue={""}
+                                                    name="review"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.review}
+                                                />
+                                                {errors.review && touched.review ? <span style={{ color: "red" }}>{errors.review}</span> : null}
                                             </div>
                                         </div>
                                         <div className="col-lg-12">
@@ -224,11 +295,12 @@ function ShopDetails(props) {
                                                         <i className="fa fa-star" />
                                                     </div>
                                                 </div>
-                                                <a href="#" className="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</a>
+                                                <button type="submit" className="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                         <div className="col-lg-4 col-xl-3">
@@ -278,7 +350,7 @@ function ShopDetails(props) {
                                     <h4 className="mb-4">Featured products</h4>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded" style={{ width: 100, height: 100 }}>
-                                            <img src="img/featur-1.jpg" className="img-fluid rounded" alt="Image" />
+                                            <img src="../img/featur-1.jpg" className="img-fluid rounded" alt="Image" />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -297,7 +369,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded" style={{ width: 100, height: 100 }}>
-                                            <img src="img/featur-2.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/featur-2.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -316,7 +388,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded" style={{ width: 100, height: 100 }}>
-                                            <img src="img/featur-3.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/featur-3.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -335,7 +407,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded me-4" style={{ width: 100, height: 100 }}>
-                                            <img src="img/vegetable-item-4.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/vegetable-item-4.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -354,7 +426,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded me-4" style={{ width: 100, height: 100 }}>
-                                            <img src="img/vegetable-item-5.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/vegetable-item-5.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -373,7 +445,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded me-4" style={{ width: 100, height: 100 }}>
-                                            <img src="img/vegetable-item-6.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/vegetable-item-6.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -396,7 +468,7 @@ function ShopDetails(props) {
                                 </div>
                                 <div className="col-lg-12">
                                     <div className="position-relative">
-                                        <img src="img/banner-fruits.jpg" className="img-fluid w-100 rounded" alt />
+                                        <img src="../img/banner-fruits.jpg" className="img-fluid w-100 rounded" alt />
                                         <div className="position-absolute" style={{ top: '50%', right: 10, transform: 'translateY(-50%)' }}>
                                             <h3 className="text-secondary fw-bold">Fresh <br /> Fruits <br /> Banner</h3>
                                         </div>
@@ -410,7 +482,7 @@ function ShopDetails(props) {
                         {
                             review.reviews.map((v) => (
                                 <div >
-                                    <div className='reviewe'>
+                                    <div >
                                         <h4>{v.name}</h4>
                                         <h5>{v.email}</h5>
                                         <p>{v.review}</p>

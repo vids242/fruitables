@@ -6,7 +6,7 @@ const inistialstate = {
     error: null
 }
 export const productReducer = (state = inistialstate, action) => {
-    console.log(action);
+    // console.log(action);
 
     switch (action.type) {
         case LOADING_PRODUCT:

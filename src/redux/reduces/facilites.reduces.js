@@ -7,7 +7,7 @@ const inistialState = {
 }
 
 export const FacilitesReducer = (state = inistialState, action) => {
-    console.log(action);
+    // console.log(action);
 
     switch (action.type) {
         case ADD_FACILITES:

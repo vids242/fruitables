@@ -7,6 +7,7 @@ import Shop from '../user/container/Shop/Shop';
 import ShopDetails from '../user/container/ShopDetails/ShopDetails';
 import PrivateRoute from './PrivateRoute';
 import Contact from '../user/container/Contact/Contact';
+import Review from '../user/container/Review/Review';
 
 function UserRouter(props) {
     return (
@@ -19,6 +20,7 @@ function UserRouter(props) {
                     <Route exact path="/Shop/:id" element={<ShopDetails />} />
                 </Route>
             <Route path='/contact' element={<Contact/>} />
+            <Route path='/review' element={<Review/>} />
 
             </Routes>
             <Footer />

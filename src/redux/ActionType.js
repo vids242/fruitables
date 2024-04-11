@@ -19,4 +19,12 @@ export const LOADING_PRODUCT = "LOADINGE_PRODUCT"
 
 export const GET_SHOPDATA = "GET_SHOPDATA"
 
+
+
+export const ADD_REVIEWE = "ADD_REVIEWE"
+
 export const GET_REVIEWE = "GET_REVIEWE"
+
+export const DELETE_REVIEWE = "DELETE_REVIEWE"
+
+export const UPDATE_REVIEWE = "UPDATE_REVIEWE"
