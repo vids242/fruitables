@@ -27,7 +27,7 @@ function Review(props) {
 
 
     const review = useSelector(state => state.Review)
-    console.log(review);
+    // console.log(review);
    
 
    

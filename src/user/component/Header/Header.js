@@ -35,7 +35,7 @@ function Header(props) {
                                     <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                     <div className="dropdown-menu m-0 bg-secondary rounded-0">
                                         <NavLink to="/review" className="dropdown-item">Review</NavLink>
-                                        <a href="cart.html" className="dropdown-item">Cart</a>
+                                        <NavLink to="/cart" className="dropdown-item">Cart</NavLink>
                                         <a href="chackout.html" className="dropdown-item">Chackout</a>
                                         <a href="testimonial.html" className="dropdown-item">Testimonial</a>
                                         <a href="404.html" className="dropdown-item">404 Page</a>

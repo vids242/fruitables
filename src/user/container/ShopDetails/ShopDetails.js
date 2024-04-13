@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,6 +8,7 @@ import { object, string } from 'yup';
 import { useFormik } from 'formik';
 
 import { DataGrid } from '@mui/x-data-grid';
+import { getCart } from '../../../redux/action/cart.action';
 
 function ShopDetails(props) {
     const { id } = useParams()
@@ -19,7 +20,7 @@ function ShopDetails(props) {
     console.log(fruits)
 
 
-    const review = useSelector(state => state.review)
+    const review = useSelector(state => state.Review)
     // console.log(review.reviews);
 
 
@@ -40,7 +41,9 @@ function ShopDetails(props) {
         }
     }
 
-
+    const hendaldata = (id) => {
+        dispatch(getCart(id))
+    }
 
     useEffect(() => {
         getData()
@@ -137,7 +140,9 @@ function ShopDetails(props) {
                                             </button>
                                         </div>
                                     </div>
-                                    <a href="#" className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                    <Link to={`/Shopdetails/${id}`} onClick={hendaldata(id)}>
+                                        <button type='submit' className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</button>
+                                    </Link>
                                 </div>
                                 <div className="col-lg-12">
                                     <nav>
@@ -477,23 +482,7 @@ function ShopDetails(props) {
                             </div>
                         </div>
                     </div>
-                    <>
-                        <h4>Reviewe</h4>
-                        {
-                            review.reviews.map((v) => (
-                                <div >
-                                    <div >
-                                        <h4>{v.name}</h4>
-                                        <h5>{v.email}</h5>
-                                        <p>{v.review}</p>
-                                        <h2>{v.rating}</h2>
-                                    </div>
 
-                                </div>
-
-                            ))
-                        }
-                    </>
                     <h1 className="fw-bold mb-0">Related products</h1>
                     <div className="vesitable">
                         <div className="owl-carousel vegetable-carousel justify-content-center">

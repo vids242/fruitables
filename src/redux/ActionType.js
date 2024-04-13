@@ -28,3 +28,6 @@ export const GET_REVIEWE = "GET_REVIEWE"
 export const DELETE_REVIEWE = "DELETE_REVIEWE"
 
 export const UPDATE_REVIEWE = "UPDATE_REVIEWE"
+
+
+export const GET_CART = "GET_CART"
