@@ -95,7 +95,9 @@ let adminlink = [
   { title: "Products", icon: <AppleIcon />, to: "/admin/product" },
   { title: "Reviews", icon: <ReviewsIcon />, to: "/admin/review" },
   { title: "Category", icon: <CategoryIcon />, to: "/admin/category" },
-  { title: "Facilites", icon: <WarehouseIcon />, to: "/admin/facilites" }
+  { title: "Facilites", icon: <WarehouseIcon />, to: "/admin/facilites" },
+  { title: "Counter", icon: <AppleIcon />, to: "/admin/counter" }
+
 
 ]
 

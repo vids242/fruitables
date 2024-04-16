@@ -7,8 +7,7 @@ import { object, string } from 'yup';
 
 import { useFormik } from 'formik';
 
-import { DataGrid } from '@mui/x-data-grid';
-import { getCart } from '../../../redux/action/cart.action';
+
 
 function ShopDetails(props) {
     const { id } = useParams()
@@ -41,9 +40,7 @@ function ShopDetails(props) {
         }
     }
 
-    const hendaldata = (id) => {
-        dispatch(getCart(id))
-    }
+    
 
     useEffect(() => {
         getData()
@@ -140,7 +137,7 @@ function ShopDetails(props) {
                                             </button>
                                         </div>
                                     </div>
-                                    <Link to={`/Shopdetails/${id}`} onClick={hendaldata(id)}>
+                                    <Link to={`/cart/${id}`} >
                                         <button type='submit' className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</button>
                                     </Link>
                                 </div>

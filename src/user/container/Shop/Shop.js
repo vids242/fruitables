@@ -217,7 +217,7 @@ function Shop(props) {
                                         {
                                             shopData.shop.map((v) => (
                                                 <div className="col-md-6 col-lg-6 col-xl-4">
-                                                    <Link to={`/Shop/${v.id}`}>
+                                                    <Link to={`/Shopdetails/${v.id}`}>
                                                         <div className="rounded position-relative fruite-item">
                                                             <div className="fruite-img">
                                                                 <img src={v.image} className="img-fluid w-100 rounded-top" alt />
