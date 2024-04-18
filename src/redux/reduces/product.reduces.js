@@ -19,7 +19,7 @@ export const productReducer = (state = inistialstate, action) => {
         case GET_PRODUCTS:
             return {
                 isLodaing: false,
-                products: action.products.concet(action.payload),
+                products: state.products.concat(action.payload),
                 error: null
             }
             case DELETE_PRODUCTS:

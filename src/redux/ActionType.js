@@ -20,3 +20,4 @@ export const LOADING_PRODUCT = "LOADINGE_PRODUCT"
 export const GET_SHOPDATA = "GET_SHOPDATA"
 
 export const GET_REVIEWE = "GET_REVIEWE"
+export const GET_CART = "GET_CART"

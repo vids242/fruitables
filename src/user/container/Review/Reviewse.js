@@ -10,6 +10,7 @@ import { object, string, number, date, InferType } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReview, getReview } from '../../../redux/action/review.action';
 import { Padding } from '@mui/icons-material';
+import { useEffect } from 'react';
 
 
 function Reviewse(props) {
@@ -30,14 +31,18 @@ function Reviewse(props) {
         validationSchema: reviewSchema,
         onSubmit: values => {
 
-            dispatch(getReview(values))
+
         },
     });
 
     const { handleSubmit, handleBlur, handleChange, errors, values, touched } = formik
 
-    const reviewdata = useSelector(state => state.review)
-    console.log(reviewdata);
+    const review = useSelector(state => state.review)
+    console.log(review);
+
+    useEffect(() => {
+        dispatch(getReview())
+    }, [])
 
     const columns = [
         { field: 'name', headerName: 'Name', width: 70 },
@@ -67,7 +72,7 @@ function Reviewse(props) {
 
     }
     const handleDelet = (id) => {
-console.log('fdfvgg');
+        console.log('fdfvgg');
     }
 
 
@@ -143,7 +148,8 @@ console.log('fdfvgg');
                 </form>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
-                        rows={reviewdata.review}
+                        rows={review.reviews
+                        }
                         columns={columns}
                         initialState={{
                             pagination: {
@@ -156,7 +162,7 @@ console.log('fdfvgg');
                 </div>
             </div>
         </div>
-    );
+    );``
 }
 
 export default Reviewse;

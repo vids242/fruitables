@@ -5,6 +5,7 @@ import Layout from '../admin/component/Layout/Layout';
 import Review from '../admin/container/Review/Review';
 import Category from '../admin/container/Category/Category';
 import Facilites from '../admin/container/Facilites/Facilites';
+import Counter from '../admin/container/Counter/Counter';
 
 function AdminRouter(props) {
     return (
@@ -15,6 +16,8 @@ function AdminRouter(props) {
                     <Route exact path="/review" element={<Review />} />
                     <Route exact path="/category" element={<Category />} />
                     <Route exact path="/facilites" element={<Facilites />} />
+                    <Route exact path="/Counter" element={<Counter />} />
+
                 </Routes>
             </Layout>
         </div>

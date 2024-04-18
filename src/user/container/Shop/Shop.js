@@ -2,12 +2,17 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { get_shopdata } from '../../../redux/action/shop.action';
+import { addToCart } from '../../../redux/slice/cart.slice';
+// import { addToCart } from '../../../redux/slice/cart.slice';
 
 function Shop(props) {
     const dispatch = useDispatch()
     const shopData = useSelector(state => state.shops)
     console.log(shopData);
+const hendleaddcart=(id)=>{
+    dispatch(addToCart(id))
 
+}
     useEffect(() => {
         dispatch(get_shopdata())
     }, [])
@@ -228,7 +233,7 @@ function Shop(props) {
                                                                 <p>{v.description}</p>
                                                                 <div className="d-flex justify-content-between flex-lg-wrap">
                                                                     <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
-                                                                    <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                                                    <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" onClick={()=>hendleaddcart(v.id)}/> Add to cart</a>
                                                                 </div>
                                                             </div>
                                                         </div>

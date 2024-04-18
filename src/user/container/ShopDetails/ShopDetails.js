@@ -5,18 +5,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getreview } from '../../../redux/action/shopdetails.action';
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
+import { addToCart } from '../../../redux/slice/cart.slice';
 
 
 function ShopDetails(props) {
     const { id } = useParams()
+    const cart=useSelector((state)=>state.Carts)
+    console.log(cart);
     // console.log(id);
     const dispatch = useDispatch()
 
 
     const [fruits, setFruits] = useState([]);
-    console.log(fruits)
+    // console.log(fruits)
 
-
+    const hendleaddtocart=()=>{
+        dispatch(addToCart(id))
+    }
     const review = useSelector(state => state.review)
     // console.log(review.reviews);
 
@@ -67,6 +72,8 @@ function ShopDetails(props) {
 
     const { handleBlur, handleChange, handleSubmit, errors, values, touched } = formik
 
+
+   
     return (
         <div>
             {/* Modal Search Start */}
@@ -136,7 +143,7 @@ function ShopDetails(props) {
                                             </button>
                                         </div>
                                     </div>
-                                    <a href="#" className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                    <a href="#"  onClick={hendleaddtocart} className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
                                 </div>
                                 <div className="col-lg-12">
                                     <nav>
@@ -492,7 +499,14 @@ function ShopDetails(props) {
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
                                     <div className="d-flex justify-content-between flex-lg-wrap">
                                         <p className="text-dark fs-5 fw-bold">$4.99 / kg</p>
-                                        <a href="#" className="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                        <a
+                                         href="#"
+                                         onClick={hendleaddtocart}
+                                         className="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary">
+                                            <i className="fa fa-shopping-bag me-2 text-primary"/>  
+                                            
+                                            Add to cart
+                                            </a>
                                     </div>
                                 </div>
                             </div>
