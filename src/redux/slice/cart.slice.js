@@ -16,12 +16,12 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       console.log(action);
 
-      const index = state.cart.findIndex((v) => v.pid === action.payload);
+      const index = state.cart.findIndex((v) => v.pid === action.payload.id);
 
       if (index >= 0) {
-        state.cart[index].qty++;
+        state.cart[index].qty +=action.payload.count;
       } else {
-        state.cart.push({ pid: action.payload, qty: 1 });
+        state.cart.push({ pid: action.payload, qty: action.payload.count });
 
       }
 

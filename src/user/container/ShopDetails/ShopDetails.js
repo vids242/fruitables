@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getreview } from '../../../redux/action/shopdetails.action';
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
-import { addToCart } from '../../../redux/slice/cart.slice';
+import { addToCart, decrementQty, incrementQty } from '../../../redux/slice/cart.slice';
+import { Preview } from '@mui/icons-material';
+// import { addToCart, decrementQty, incrementQty } from '../../../redux/slice/cart.slice';
 
 
 function ShopDetails(props) {
@@ -15,12 +17,22 @@ function ShopDetails(props) {
     // console.log(id);
     const dispatch = useDispatch()
 
+    const  [count,setCount]= useState(1)
 
+    const hendleInc = (id) => {
+        setCount(Preview=>Preview +1)
+      }
+      const hendledec = (id) => {
+       if(count>1){
+        setCount(Preview=>Preview -1)
+
+       }
+      }
     const [fruits, setFruits] = useState([]);
     // console.log(fruits)
 
     const hendleaddtocart=()=>{
-        dispatch(addToCart(id))
+        dispatch(addToCart({id,count}))
     }
     const review = useSelector(state => state.review)
     // console.log(review.reviews);
@@ -132,13 +144,20 @@ function ShopDetails(props) {
                                     <p className="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
                                     <div className="input-group quantity mb-5" style={{ width: 100 }}>
                                         <div className="input-group-btn">
-                                            <button className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                            <button className="btn btn-sm btn-minus rounded-circle bg-light border" 
+                                              onClick={()=>hendledec()}
+                                              >
                                                 <i className="fa fa-minus" />
                                             </button>
                                         </div>
-                                        <input type="text" className="form-control form-control-sm text-center border-0" defaultValue={1} />
+                                        <span className="form-control form-control-sm text-center border-0"   >
+                                        
+                                        {count}
+                                            </span>
                                         <div className="input-group-btn">
-                                            <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                            <button   className="btn btn-sm btn-plus rounded-circle bg-light border"
+                                            onClick={()=>hendleInc()}
+                                            >
                                                 <i className="fa fa-plus" />
                                             </button>
                                         </div>

@@ -13,5 +13,6 @@ export const RootReducer = combineReducers({
     shops : shopReducer,
     review : reviewsReducer,
     Carts: cartSlice,
-    Counte: counterSlice
+    Counte: counterSlice,
+    // coupon:couponSlice
 })
