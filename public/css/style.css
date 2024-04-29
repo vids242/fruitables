@@ -495,3 +495,24 @@
 }
 /*** Footer End ***/
 
+.light{
+    background-color: white;
+    color: black;
+  }
+.dark{
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+.dark  a{
+    color: #ffffff  !important;
+}
+
+.dark h2,h3,h4,h5,h6{
+
+    color: #ffffff  !important;
+}
+.pteg{
+    margin: 0 auto;
+    font-size: 2rem;
+    color: #81C408 !important;
+}

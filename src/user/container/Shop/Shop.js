@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { get_shopdata } from '../../../redux/action/shop.action';
+import { addToCart } from '../../../redux/slice/cart.slice';
+
 
 function Shop(props) {
-    const [fruitData, setFruitData] = useState([]);
+    const dispatch = useDispatch()
+    const shopData = useSelector(state => state.shops)
+    console.log(shopData);
 
-    const getData = async () => {
-        try {
-            const respones = await fetch("http://localhost:8000/fruites")
-            const data = await respones.json()
-            setFruitData(data)
-        } catch (error) {
-            alert(error.message)
-        }
+    const hendleaddtocart = (id) => {
+        dispatch(addToCart({id,count:1}))
     }
 
     useEffect(() => {
-        getData()
+        dispatch(get_shopdata())
     }, [])
     return (
         <div>
@@ -221,7 +221,7 @@ function Shop(props) {
                                 <div className="col-lg-9">
                                     <div className="row g-4 justify-content-center">
                                         {
-                                            fruitData.map((v) => (
+                                            shopData.shop.map((v) => (
                                                 <div className="col-md-6 col-lg-6 col-xl-4">
                                                     <Link to={`/Shop/${v.id}`}>
                                                         <div className="rounded position-relative fruite-item">
@@ -234,7 +234,7 @@ function Shop(props) {
                                                                 <p>{v.description}</p>
                                                                 <div className="d-flex justify-content-between flex-lg-wrap">
                                                                     <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
-                                                                    <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                                                    <Link onClick={()=>hendleaddtocart(v.id)} className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary"  /> Add to cart</Link>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetFacilites } from '../../../redux/action/facilites.action';
 
 function Home(props) {
     let vegetable_carousel = {
@@ -67,6 +69,15 @@ function Home(props) {
         }
     }
 
+    const dispatch = useDispatch()
+
+    const facilites = useSelector(state => state.facilites)
+    console.log(facilites);
+
+    useEffect(() => {
+        dispatch(GetFacilites())
+    }, [])
+
     return (
         <div>
             {/* Hero Start */}
@@ -111,50 +122,22 @@ function Home(props) {
             <div className="container-fluid featurs py-5">
                 <div className="container py-5">
                     <div className="row g-4">
-                        <div className="col-md-6 col-lg-3">
-                            <div className="featurs-item text-center rounded bg-light p-4">
-                                <div className="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                                    <i className="fas fa-car-side fa-3x text-white" />
+
+                        {
+                            facilites.facilites.map((v, i) => (
+                                <div className="col-md-6 col-lg-3">
+                                    <div className="featurs-item text-center rounded bg-light p-4">
+                                        <div className="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                                            <i className="fas fa-car-side fa-3x text-white" />
+                                        </div>
+                                        <div className="featurs-content text-center">
+                                            <h5>{v.name}</h5>
+                                            <p className="mb-0">{v.discription}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="featurs-content text-center">
-                                    <h5>Free Shipping</h5>
-                                    <p className="mb-0">Free on order over $300</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3">
-                            <div className="featurs-item text-center rounded bg-light p-4">
-                                <div className="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                                    <i className="fas fa-user-shield fa-3x text-white" />
-                                </div>
-                                <div className="featurs-content text-center">
-                                    <h5>Security Payment</h5>
-                                    <p className="mb-0">100% security payment</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3">
-                            <div className="featurs-item text-center rounded bg-light p-4">
-                                <div className="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                                    <i className="fas fa-exchange-alt fa-3x text-white" />
-                                </div>
-                                <div className="featurs-content text-center">
-                                    <h5>30 Day Return</h5>
-                                    <p className="mb-0">30 day money guarantee</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3">
-                            <div className="featurs-item text-center rounded bg-light p-4">
-                                <div className="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                                    <i className="fa fa-phone-alt fa-3x text-white" />
-                                </div>
-                                <div className="featurs-content text-center">
-                                    <h5>24/7 Support</h5>
-                                    <p className="mb-0">Support every time fast</p>
-                                </div>
-                            </div>
-                        </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
@@ -165,7 +148,7 @@ function Home(props) {
                     <div className="tab-class text-center">
                         <div className="row g-4">
                             <div className="col-lg-4 text-start">
-                                <h1>Our Organic Products</h1>
+                                <h2>Our Organic Products</h2>
                             </div>
                             <div className="col-lg-8 text-end">
                                 <ul className="nav nav-pills d-inline-flex text-center mb-5">
@@ -539,7 +522,7 @@ function Home(props) {
                                     <div className="px-4 rounded-bottom">
                                         <div className="service-content bg-light text-center p-4 rounded">
                                             <h5 className="text-primary">Tasty Fruits</h5>
-                                            <h3 className="mb-0">Free delivery</h3>
+                                            <p className="mb-0 pteg">Free delivery</p>
                                         </div>
                                     </div>
                                 </div>
@@ -565,7 +548,7 @@ function Home(props) {
             {/* Vesitable Shop Start*/}
             <div className="container-fluid vesitable py-5">
                 <div className="container py-5">
-                    <h1 className="mb-0">Fresh Organic Vegetables</h1>
+                    <h2 className="mb-0">Fresh Organic Vegetables</h2>
                     <OwlCarousel {...vegetable_carousel} className="owl-carousel vegetable-carousel justify-content-center">
                         <div className="border border-primary rounded position-relative vesitable-item">
                             <div className="vesitable-img">
@@ -689,7 +672,7 @@ function Home(props) {
                     <div className="row g-4 align-items-center">
                         <div className="col-lg-6">
                             <div className="py-4">
-                                <h1 className="display-3 text-white">Fresh Exotic Fruits</h1>
+                                <h2 className="display-3 text-white">Fresh Exotic Fruits</h2>
                                 <p className="fw-normal display-3 text-dark mb-4">in Our Store</p>
                                 <p className="mb-4 text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
                                 <a href="#" className="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">BUY</a>
@@ -715,7 +698,7 @@ function Home(props) {
             <div className="container-fluid py-5">
                 <div className="container py-5">
                     <div className="text-center mx-auto mb-5" style={{ maxWidth: 700 }}>
-                        <h1 className="display-4">Bestseller Products</h1>
+                        <h2 className="display-4">Bestseller Products</h2>
                         <p>Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
                     </div>
                     <div className="row g-4">
@@ -926,28 +909,28 @@ function Home(props) {
                                 <div className="counter bg-white rounded p-5">
                                     <i className="fa fa-users text-secondary" />
                                     <h4>satisfied customers</h4>
-                                    <h1>1963</h1>
+                                    <h2>1963</h2>
                                 </div>
                             </div>
                             <div className="col-md-6 col-lg-6 col-xl-3">
                                 <div className="counter bg-white rounded p-5">
                                     <i className="fa fa-users text-secondary" />
                                     <h4>quality of service</h4>
-                                    <h1>99%</h1>
+                                    <h2>99%</h2>
                                 </div>
                             </div>
                             <div className="col-md-6 col-lg-6 col-xl-3">
                                 <div className="counter bg-white rounded p-5">
                                     <i className="fa fa-users text-secondary" />
                                     <h4>quality certificates</h4>
-                                    <h1>33</h1>
+                                    <h2>33</h2>
                                 </div>
                             </div>
                             <div className="col-md-6 col-lg-6 col-xl-3">
                                 <div className="counter bg-white rounded p-5">
                                     <i className="fa fa-users text-secondary" />
                                     <h4>Available Products</h4>
-                                    <h1>789</h1>
+                                    <h2>789</h2>
                                 </div>
                             </div>
                         </div>
@@ -1047,3 +1030,4 @@ function Home(props) {
 }
 
 export default Home;
+

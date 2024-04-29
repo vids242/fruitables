@@ -1,10 +1,91 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { getreview } from '../../../redux/action/shopdetails.action';
+import { object, string } from 'yup';
+import { useFormik } from 'formik';
+import { addToCart, decrementQty, incrementQty } from '../../../redux/slice/cart.slice';
+import { Preview } from '@mui/icons-material';
+// import { addToCart, decrementQty, incrementQty } from '../../../redux/slice/cart.slice';
+
+
 function ShopDetails(props) {
-    const {id} = useParams()
+    const { id } = useParams()
+    const cart=useSelector((state)=>state.Carts)
+    console.log(cart);
     // console.log(id);
-    
+    const dispatch = useDispatch()
+
+    const  [count,setCount]= useState(1)
+
+    const hendleInc = (id) => {
+        setCount(Preview=>Preview +1)
+      }
+      const hendledec = (id) => {
+       if(count>1){
+        setCount(Preview=>Preview -1)
+
+       }
+      }
+    const [fruits, setFruits] = useState([]);
+    // console.log(fruits)
+
+    const hendleaddtocart=()=>{
+        dispatch(addToCart({id,count}))
+    }
+    const review = useSelector(state => state.review)
+    // console.log(review.reviews);
+
+
+
+    const getData = async () => {
+
+        try {
+
+            const response = await fetch("http://localhost:8000/fruites");
+            const data = await response.json()
+
+
+            const ans = data.find((v) => v.id === id)
+            console.log(ans);
+            setFruits(ans)
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+
+
+    useEffect(() => {
+        getData()
+        dispatch(getreview())
+    }, [])
+
+
+    let reviewSchema = object({
+        name: string().required(),
+        email: string().required(),
+        review: string().required()
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            name: "",
+            email: "",
+            review: ""
+        },
+        validationSchema: reviewSchema,
+
+        onSubmit: values => {
+            console.log(values);
+        },
+    });
+
+    const { handleBlur, handleChange, handleSubmit, errors, values, touched } = formik
+
+
+   
     return (
         <div>
             {/* Modal Search Start */}
@@ -44,14 +125,14 @@ function ShopDetails(props) {
                                 <div className="col-lg-6">
                                     <div className="border rounded">
                                         <a href="#">
-                                            <img src="img/single-item.jpg" className="img-fluid rounded" alt="Image" />
+                                            <img src={`../${fruits.image}`} className="img-fluid rounded" alt="Image" />
                                         </a>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
-                                    <h4 className="fw-bold mb-3">Brocoli</h4>
+                                    <h4 className="fw-bold mb-3">{fruits.fruite}</h4>
                                     <p className="mb-3">Category: Vegetables</p>
-                                    <h5 className="fw-bold mb-3">3,35 $</h5>
+                                    <h5 className="fw-bold mb-3">${fruits.price}</h5>
                                     <div className="d-flex mb-4">
                                         <i className="fa fa-star text-secondary" />
                                         <i className="fa fa-star text-secondary" />
@@ -63,18 +144,25 @@ function ShopDetails(props) {
                                     <p className="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
                                     <div className="input-group quantity mb-5" style={{ width: 100 }}>
                                         <div className="input-group-btn">
-                                            <button className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                            <button className="btn btn-sm btn-minus rounded-circle bg-light border" 
+                                              onClick={()=>hendledec()}
+                                              >
                                                 <i className="fa fa-minus" />
                                             </button>
                                         </div>
-                                        <input type="text" className="form-control form-control-sm text-center border-0" defaultValue={1} />
+                                        <span className="form-control form-control-sm text-center border-0"   >
+                                        
+                                        {count}
+                                            </span>
                                         <div className="input-group-btn">
-                                            <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                            <button   className="btn btn-sm btn-plus rounded-circle bg-light border"
+                                            onClick={()=>hendleInc()}
+                                            >
                                                 <i className="fa fa-plus" />
                                             </button>
                                         </div>
                                     </div>
-                                    <a href="#" className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                    <a href="#"  onClick={hendleaddtocart} className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
                                 </div>
                                 <div className="col-lg-12">
                                     <nav>
@@ -182,40 +270,47 @@ function ShopDetails(props) {
                                         </div>
                                     </div>
                                 </div>
-                                <form action="#">
-                                    <h4 className="mb-5 fw-bold">Leave a Reply</h4>
+
+                                <h4 className="mb-5 fw-bold">Leave a Reply</h4>
+                                <form onSubmit={handleSubmit}>
                                     <div className="row g-4">
                                         <div className="col-lg-6">
                                             <div className="border-bottom rounded">
-                                                <input type="text" className="form-control border-0 me-4" placeholder="Yur Name *" />
+                                                <input type="text" name='name' id='name' className="form-control border-0 me-4" placeholder="Yur Name *"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.name}
+                                                   
+                                                    helperText={errors.name && touched.name ? errors.name : ""}
+                                                />
+                                                 {errors.name && touched.name ? <span>{errors.name}</span> : false}
                                             </div>
                                         </div>
                                         <div className="col-lg-6">
                                             <div className="border-bottom rounded">
-                                                <input type="email" className="form-control border-0" placeholder="Your Email *" />
+                                                <input type="email" name='email' id='email' className="form-control border-0" placeholder="Your Email *"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.email}
+                                                    error={errors.email && touched.email ? true : false}
+                                                    helperText={errors.email && touched.email ? errors.email : ""}
+                                                />
                                             </div>
                                         </div>
                                         <div className="col-lg-12">
                                             <div className="border-bottom rounded my-4">
-                                                <textarea name id className="form-control border-0" cols={30} rows={8} placeholder="Your Review *" spellCheck="false" defaultValue={""} />
+                                                <textarea name="review" id='review' className="form-control border-0" cols={30} rows={8} placeholder="Your Review *" spellCheck="false" defaultValue={""}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.review}
+                                                    error={errors.review && touched.review ? true : false}
+                                                    helperText={errors.review && touched.review ? errors.review : ""}
+                                                />
                                             </div>
                                         </div>
-                                        <div className="col-lg-12">
-                                            <div className="d-flex justify-content-between py-3 mb-5">
-                                                <div className="d-flex align-items-center">
-                                                    <p className="mb-0 me-3">Please rate:</p>
-                                                    <div className="d-flex align-items-center" style={{ fontSize: 12 }}>
-                                                        <i className="fa fa-star text-muted" />
-                                                        <i className="fa fa-star" />
-                                                        <i className="fa fa-star" />
-                                                        <i className="fa fa-star" />
-                                                        <i className="fa fa-star" />
-                                                    </div>
-                                                </div>
-                                                <a href="#" className="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</a>
-                                            </div>
-                                        </div>
+
                                     </div>
+                                    <button type="submit">post review</button>
                                 </form>
                             </div>
                         </div>
@@ -266,7 +361,7 @@ function ShopDetails(props) {
                                     <h4 className="mb-4">Featured products</h4>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded" style={{ width: 100, height: 100 }}>
-                                            <img src="img/featur-1.jpg" className="img-fluid rounded" alt="Image" />
+                                            <img src="../img/featur-1.jpg" className="img-fluid rounded" alt="Image" />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -285,7 +380,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded" style={{ width: 100, height: 100 }}>
-                                            <img src="img/featur-2.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/featur-2.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -304,7 +399,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded" style={{ width: 100, height: 100 }}>
-                                            <img src="img/featur-3.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/featur-3.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -323,7 +418,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded me-4" style={{ width: 100, height: 100 }}>
-                                            <img src="img/vegetable-item-4.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/vegetable-item-4.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -342,7 +437,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded me-4" style={{ width: 100, height: 100 }}>
-                                            <img src="img/vegetable-item-5.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/vegetable-item-5.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -361,7 +456,7 @@ function ShopDetails(props) {
                                     </div>
                                     <div className="d-flex align-items-center justify-content-start">
                                         <div className="rounded me-4" style={{ width: 100, height: 100 }}>
-                                            <img src="img/vegetable-item-6.jpg" className="img-fluid rounded" alt />
+                                            <img src="../img/vegetable-item-6.jpg" className="img-fluid rounded" alt />
                                         </div>
                                         <div>
                                             <h6 className="mb-2">Big Banana</h6>
@@ -384,7 +479,7 @@ function ShopDetails(props) {
                                 </div>
                                 <div className="col-lg-12">
                                     <div className="position-relative">
-                                        <img src="img/banner-fruits.jpg" className="img-fluid w-100 rounded" alt />
+                                        <img src="../img/banner-fruits.jpg" className="img-fluid w-100 rounded" alt />
                                         <div className="position-absolute" style={{ top: '50%', right: 10, transform: 'translateY(-50%)' }}>
                                             <h3 className="text-secondary fw-bold">Fresh <br /> Fruits <br /> Banner</h3>
                                         </div>
@@ -393,6 +488,23 @@ function ShopDetails(props) {
                             </div>
                         </div>
                     </div>
+                    <>
+                        <h4>Reviewe</h4>
+                        {
+                            review.reviews.map((v) => (
+                                <div >
+                                    <div >
+                                        <h4>{v.name}</h4>
+                                        <h5>{v.email}</h5>
+                                        <p>{v.review}</p>
+                                        <h2>{v.rating}</h2>
+                                    </div>
+
+                                </div>
+
+                            ))
+                        }
+                    </>
                     <h1 className="fw-bold mb-0">Related products</h1>
                     <div className="vesitable">
                         <div className="owl-carousel vegetable-carousel justify-content-center">
@@ -406,7 +518,14 @@ function ShopDetails(props) {
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
                                     <div className="d-flex justify-content-between flex-lg-wrap">
                                         <p className="text-dark fs-5 fw-bold">$4.99 / kg</p>
-                                        <a href="#" className="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                        <a
+                                         href="#"
+                                         onClick={hendleaddtocart}
+                                         className="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary">
+                                            <i className="fa fa-shopping-bag me-2 text-primary"/>  
+                                            
+                                            Add to cart
+                                            </a>
                                     </div>
                                 </div>
                             </div>
