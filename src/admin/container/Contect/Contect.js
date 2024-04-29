@@ -17,7 +17,7 @@ import { coupenadd, deleteCoupon, editCoupon, getCoupon,  } from "../../../redux
 
 
 
-function Coupon(props) {
+function Contect(props) {
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
@@ -43,14 +43,14 @@ function Coupon(props) {
     setOpen(true);
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteCoupon(id));
-  };
+//   const handleDelete = (id) => {
+//     dispatch(deleteCoupon(id));
+//   };
 
   const columns = [
-    { field: "coupon", headerName: "Coupon", width: 70 },
-    { field: "per", headerName: "Per", width: 130 },
-    { field: "expiry", headerName: "Expiry", width: 130 },
+    { field: "contect", headerName: "contect", width: 70 },
+    { field: "name", headerName: "Per", width: 130 },
+    { field: "phone", headerName: "Expiry", width: 130 },
     {
       field: "Action",
       headerName: "Action",
@@ -69,27 +69,27 @@ function Coupon(props) {
     },
   ];
 
-  let couponSchema = object({
-    coupon: string().required(),
-    per: number().required().positive().integer(),
-    expiry: date().required(),
+  let contectSchema = object({
+    contect: string().required(),
+    name: number().required().positive().integer(),
+    phone: date().required(),
     createdOn: date().default(() => new Date()),
   });
 
   const formik = useFormik({
     initialValues: {
-      coupon: "",
-      per: "",
-      expiry: "",
+      contect: "",
+      name: "",
+      phone: "",
     },
-    validationSchema: couponSchema,
+    validationSchema: contectSchema,
     onSubmit: (values, { resetForm }) => {
       console.log(values);
       if (edit) {
         dispatch(editCoupon(values));
 
       } else {
-        dispatch(coupenadd(values));
+      
       }
    
       resetForm();
@@ -112,47 +112,47 @@ function Coupon(props) {
               <TextField
                 margin="dense"
                 id="name"
-                name="coupon"
-                label="Coupon Code"
-                type="text"
+                name="contect"
+                label="contect "
+                type="nuber"
                 fullWidth
                 variant="standard"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.coupon}
-                error={touched.coupon && errors.coupon ? true : false}
-                helperText={
-                  touched.coupon && errors.coupon ? errors.coupon : ""
+                value={values.contect}
+                error={touched.contect && errors.contect ? true : false}
+                helnameText={
+                  touched.contect && errors.contect ? errors.contect : ""
                 }
               />
               <TextField
                 margin="dense"
                 id="name"
-                name="per"
-                label="Per"
+                name="name"
+                label="name"
                 type="number"
                 fullWidth
                 variant="standard"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.per}
-                error={touched.per && errors.per ? true : false}
-                helperText={touched.per && errors.per ? errors.per : ""}
+                value={values.name}
+                error={touched.name && errors.name ? true : false}
+                helnameText={touched.name && errors.name ? errors.name : ""}
               />
               <TextField
                 margin="dense"
                 id="name"
-                name="expiry"
-                label="expiry"
-                type="date"
+                name="phone"
+                label="phone"
+                type="nuber"
                 fullWidth
                 variant="standard"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.expiry}
-                error={touched.expiry && errors.expiry ? true : false}
-                helperText={
-                  touched.expiry && errors.expiry ? errors.expiry : ""
+                value={values.phone}
+                error={touched.phone && errors.phone ? true : false}
+                helnameText={
+                  touched.phone && errors.phone ? errors.phone : ""
                 }
               />
             </DialogContent>
@@ -164,22 +164,25 @@ function Coupon(props) {
         </Dialog>
       </React.Fragment>
 
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-        
-          rows={coupen.coupon}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-        />
-      </div>
+   
     </>
   );
 }
 
-export default Coupon;
+export default Contect;
+
+
+{/* <div style={{ height: 400, width: "100%" }}>
+<DataGrid
+
+  rows={coupen.contect}
+  columns={columns}
+  initialState={{
+    pagination: {
+      paginationModel: { page: 0, pageSize: 5 },
+    },
+  }}
+  pageSizeOptions={[5, 10]}
+  checkboxSelection
+/>
+</div> */}

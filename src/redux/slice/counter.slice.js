@@ -21,3 +21,9 @@ const counterSlice = createSlice({
 export const { incriments, decriment } = counterSlice.actions
 
 export default counterSlice.reducer
+
+
+
+
+
+

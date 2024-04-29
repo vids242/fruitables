@@ -1,6 +1,8 @@
 import React from 'react';
+import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { ThemeContext } from '../../../context/Thimecontext';
 
 function Header(props) {
 
@@ -9,13 +11,19 @@ function Header(props) {
     console.log(cart);
   
     const totalCartQty = cart.cart.reduce((acc, v) => acc + v.qty, 0);
-  
-   
+
+    const themeContext = useContext(ThemeContext);
+console.log(themeContext);
+
+   const  handleTheme =()=>{
+    
+    themeContext.toggtetheme(themeContext.theme)
+   }
     return (
 
         <div>
             {/* Navbar start */}
-            <div className="container-fluid fixed-top">
+            <div className={`container-fluid fixed-top ${themeContext.theme}`}>
                 <div className="container topbar bg-primary d-none d-lg-block">
                     <div className="d-flex justify-content-between">
                         <div className="top-info ps-2">
@@ -26,30 +34,33 @@ function Header(props) {
                             <a href="#" className="text-white"><small className="text-white mx-2">Privacy Policy</small>/</a>
                             <a href="#" className="text-white"><small className="text-white mx-2">Terms of Use</small>/</a>
                             <a href="#" className="text-white"><small className="text-white ms-2">Sales and Refunds</small></a>
+
+                            
                         </div>
+                        <button onClick={handleTheme}>-dddddddd-</button>
                     </div>
                 </div>
                 <div className="container px-0">
-                    <nav className="navbar navbar-light bg-white navbar-expand-xl">
+                    <nav className="navbar navbar-light  navbar-expand-xl">
                         <a href="index.html" className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></a>
                         <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                             <span className="fa fa-bars text-primary" />
                         </button>
-                        <div className="collapse navbar-collapse bg-white" id="navbarCollapse">
-                            <div className="navbar-nav mx-auto">
+                        <div className="collapse navbar-collapse  "  id="navbarCollapse">
+                            <div className=" navbar-nav mx-auto">
                                 <NavLink to="/" className="nav-item nav-link active">Home</NavLink>
                                 <NavLink to="/Shop" className="nav-item nav-link">Shop</NavLink>
                                 <a href="shop-detail.html" className="nav-item nav-link">Shop Detail</a>
                                 <div className="nav-item dropdown">
                                     <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                    <div className="dropdown-menu m-0 bg-secondary rounded-0">
-                                        <a href="/cart" className="dropdown-item">Cart</a>
-                                        <a href="chackout.html" className="dropdown-item">Chackout</a>
-                                        <a href="testimonial.html" className="dropdown-item">Testimonial</a>
-                                        <a href="404.html" className="dropdown-item">404 Page</a>
+                                    <div className=" dropdown-menu m-0 bg-secondary rounded-0">
+                                        <a href="/cart" className="ategs dropdown-item">Cart</a>
+                                        <a href="chackout.html" className="ategs dropdown-item">Chackout</a>
+                                        <a href="testimonial.html" className="ategs dropdown-item">Testimonial</a>
+                                        <a href="404.html" className="ategs dropdown-item">404 Page</a>
                                     </div>
                                 </div>
-                                <NavLink to="/contact" className="nav-item nav-link">Contact</NavLink>
+                                <NavLink to="/contact" className="ategs nav-item nav-link">Contact</NavLink>
                             </div>
                             <div className="d-flex m-3 me-0">
                                 <button className="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i className="fas fa-search text-primary" /></button>    

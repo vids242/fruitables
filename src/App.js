@@ -7,12 +7,15 @@ import { Provider } from 'react-redux';
 import { storeReduces } from './redux/store';
 
 import { PersistGate } from 'redux-persist/integration/react'
+import { ThemeProvider } from './context/Thimecontext';
 
 function App() {
   const {store,persistor} = storeReduces()
 
   return (
-    <Provider store={store}>
+    
+    <ThemeProvider>
+      <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Routes>
           <Route exact path="/*" element={<UserRouter />} />
@@ -23,6 +26,7 @@ function App() {
         </Routes>
       </PersistGate>
     </Provider>
+      </ThemeProvider>
   );
 }
 

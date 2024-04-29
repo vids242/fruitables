@@ -21,12 +21,9 @@ const cartSlice = createSlice({
       if (index >= 0) {
         state.cart[index].qty +=action.payload.count;
       } else {
-        state.cart.push({ pid: action.payload, qty: action.payload.count });
+        state.cart.push({ pid: action.payload.id, qty: action.payload.count });
 
       }
-
-
-
 
     },
     incrementQty: (state, action) => {

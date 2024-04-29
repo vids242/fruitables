@@ -98,7 +98,9 @@ let adminlink = [
   { title: "Category", icon: <CategoryIcon />, to: "/admin/category" },
   { title: "Facilites", icon: <WarehouseIcon />, to: "/admin/facilites" },  
   { title: "counte", icon: <AppleIcon />, to: "/admin/counter" },
-  { title: "Coupencode", icon: <AppleIcon />, to: "/admin/Coupencode" }
+  { title: "Coupencode", icon: <AppleIcon />, to: "/admin/Coupencode" },
+  { title: "Context", icon: <AppleIcon />, to: "/admin/Context" },
+  { title: "Contect", icon: <ReviewsIcon />, to: "/admin/Contect" }
 ]
 
 export default function Layout({ children }) {
