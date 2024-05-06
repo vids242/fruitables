@@ -6,6 +6,8 @@ import Review from '../admin/container/Review/Review';
 import Category from '../admin/container/Category/Category';
 import Facilites from '../admin/container/Facilites/Facilites';
 import Counter from '../admin/container/ToolkitCounter/Counter';
+import Coupan from '../admin/container/Coupan/Coupan';
+import Contact from '../admin/container/Contact/Contact';
 
 function AdminRouter(props) {
     return (
@@ -17,6 +19,8 @@ function AdminRouter(props) {
                     <Route exact path="/category" element={<Category />} />
                     <Route exact path="/facilites" element={<Facilites />} />
                     <Route exact path="/counter" element={<Counter />} />
+                    <Route exact path="/coupan" element={<Coupan />} />
+                    <Route exact path="/contact" element={<Contact />} />
                 </Routes>
             </Layout>
         </div>

@@ -1,7 +1,103 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getproduct } from '../../../redux/action/products.action';
+import { deletedata, dicrementQty, incrementQty } from '../../../redux/slice/cart.slice';
+import { object, string } from 'yup';
+import { useFormik } from 'formik';
+import { getCoupon } from '../../../redux/slice/coupan.slice';
+import { BaseButton } from '../../component/UI/Button/Button.style';
+import Button from '../../component/UI/Button/Button';
 
 
 function Cart(props) {
+    const cart = useSelector(state => state.cart)
+
+    const product = useSelector(state => state.products)
+
+    const coupans = useSelector(state => state.coupon)
+    // console.log(coupans);
+    // console.log(cart, product);
+    const [discount, setDiscount] = useState('')
+
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getproduct())
+        dispatch(getCoupon())
+    }, [])
+
+    const cartData = cart.cart.map((v) => {
+        // console.log(v.pid);
+
+        const productData = product.products.find((v1) => v1.id === v.pid)
+        console.log(productData);
+
+        return { ...productData, qty: v.qty }
+    })
+    const hendalInc = (id) => {
+        dispatch(incrementQty(id))
+    }
+    const hendalDic = (id) => {
+        dispatch(dicrementQty(id))
+    }
+    const hendalDelet = (id) => {
+        dispatch(deletedata(id))
+    }
+
+    const hendalSubmit = (data) => {
+        console.log(data);
+        let flag = 0
+        let pr = 0
+
+        coupans.coupon.map((v) => {
+            const currentDate = new Date()
+            const expiryDate = new Date(v.expiry_Date)
+
+
+            console.log(currentDate, expiryDate);
+
+            if (v.coupon_name === data.coupan) {
+                if (currentDate <= expiryDate) {
+                    flag = 1
+                    pr = (v.percentage)
+                    setDiscount(pr)
+                } else {
+                    flag = 2
+                }
+            }
+        })
+
+        if (flag === 0) {
+            formik.setFieldError('coupan', "please enter valid coupan")
+        } else if (flag === 1) {
+            formik.setFieldError('coupan', `coupan applied succesfully & you get flet ${pr}% Discount`)
+        } else if (flag === 2) {
+            formik.setFieldError('coupan', "coupan expired")
+
+        }
+    }
+
+    const total = cartData.reduce((a, v) => a + v.qty * v.price, 0)
+
+    let totalDiscount = total * (discount / 100)
+
+    let totalamt = total - totalDiscount
+    let coupanSchema = object({
+        coupan: string().required(),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            coupan: ''
+        },
+        validationSchema: coupanSchema,
+        onSubmit: values => {
+            hendalSubmit(values)
+        },
+    });
+
+    const { handleBlur, handleSubmit, handleChange, values, errors, touched } = formik
 
     return (
         <div>
@@ -49,13 +145,69 @@ function Cart(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                               
+                                {
+                                    cartData.map((v) => (
+                                        <tr>
+                                            <th scope="row">
+                                                <div className="d-flex align-items-center">
+                                                    <img src={v.image} className="img-fluid me-5 rounded-circle" style={{ width: 80, height: 80 }} alt />
+                                                </div>
+                                            </th>
+                                            <td>
+                                                <p className="mb-0 mt-4">{v.name}</p>
+                                            </td>
+                                            <td>
+                                                <p className="mb-0 mt-4">{v.price} $</p>
+                                            </td>
+                                            <td>
+                                                <div className="input-group quantity mt-4" style={{ width: 100 }}>
+                                                    <div className="input-group-btn">
+                                                        <button onClick={() => hendalDic(v.id)} disabled={v.qty > 1 ? false : true} className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                            <i className="fa fa-minus" />
+                                                        </button>
+                                                    </div>
+                                                    <span className="form-control form-control-sm text-center border-0" defaultValue={v.qty} >
+                                                        {v.qty}
+                                                    </span>
+                                                    <div className="input-group-btn">
+                                                        <button onClick={() => hendalInc(v.id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                            <i className="fa fa-plus" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p className="mb-0 mt-4">{(v.price * v.qty).toFixed(2)}$</p>
+                                            </td>
+                                            <td>
+                                                <button onClick={() => hendalDelet(v.id)} className="btn btn-md rounded-circle bg-light border mt-4">
+                                                    <i className="fa fa-times text-danger" />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
                             </tbody>
                         </table>
                     </div>
                     <div className="mt-5">
-                        <input type="text" className="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code" />
-                        <button className="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                name='coupan'
+                                type="text"
+                                className="border-0 border-bottom rounded me-5 py-3 mb-4"
+                                placeholder="Coupon Code"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.coupan}
+                            />{
+                                errors.coupan && touched.coupan ? <span style={{ color: "red" }}>{errors.coupan}</span> : null
+                            }
+                            <button
+                                className="btn border-secondary rounded-pill px-4 py-3 text-primary"
+                                type="submit"> Apply Coupon
+                            </button>
+                        </form>
                     </div>
                     <div className="row g-4 justify-content-end">
                         <div className="col-8" />
@@ -65,21 +217,42 @@ function Cart(props) {
                                     <h1 className="display-6 mb-4">Cart <span className="fw-normal">Total</span></h1>
                                     <div className="d-flex justify-content-between mb-4">
                                         <h5 className="mb-0 me-4">Subtotal:</h5>
-                                        <p className="mb-0">$96.00</p>
+                                        <p className="mb-0">${total.toFixed(2)}</p>
                                     </div>
-                                    <div className="d-flex justify-content-between">
-                                        <h5 className="mb-0 me-4">Shipping</h5>
-                                        <div className>
-                                            <p className="mb-0">Flat rate: $3.00</p>
-                                        </div>
-                                    </div>
-                                    <p className="mb-0 text-end">Shipping to Ukraine.</p>
+                                    {
+                                        totalDiscount > 0 ?
+                                            <div className="d-flex justify-content-between mb-4">
+                                                <h5 className="mb-0 me-4">Discount:</h5>
+                                                <p className="mb-0">${totalDiscount.toFixed(2)}</p>
+                                            </div> : null
+
+                                    }
+                                    {
+                                        totalamt < 500 ?
+                                            <>
+                                                <div className="d-flex justify-content-between">
+                                                    <h5 className="mb-0 me-4">Shipping</h5>
+                                                    <div className>
+                                                        <p className="mb-0">Flat rate: ${100}</p>
+                                                    </div>
+
+                                                </div>
+
+                                                <p className="mb-0 text-end">Shipping to Ukraine.</p>
+                                            </>
+                                            : null
+                                    }
+
+
                                 </div>
                                 <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                     <h5 className="mb-0 ps-4 me-4">Total</h5>
-                                    <p className="mb-0 pe-4">$99.00</p>
+                                    <p className="mb-0 pe-4">${totalamt < 500 ? totalamt + 100 : totalamt}</p>
                                 </div>
-                                <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                                <Button>
+                                    Proceed Checkout
+                                </Button>
+
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { object, string } from 'yup';
 
 import { useFormik } from 'formik';
+import { addTocart } from '../../../redux/slice/cart.slice';
 
 
 
@@ -16,13 +17,23 @@ function ShopDetails(props) {
 
 
     const [fruits, setFruits] = useState([]);
-    console.log(fruits)
+    // console.log(fruits)
+
+    const CartVal = useSelector(state => state.cart)
+    console.log(CartVal);
 
 
     const review = useSelector(state => state.Review)
     // console.log(review.reviews);
 
 
+    const [count, setCount] = useState(1)
+
+
+
+    const hendalcart = () => {
+        dispatch(addTocart({id,count}))
+    }
 
     const getData = async () => {
 
@@ -40,11 +51,21 @@ function ShopDetails(props) {
         }
     }
 
-    
+
 
     useEffect(() => {
         getData()
     }, [])
+
+    const handlePlus = () => {
+        setCount(prev => prev + 1)
+    }
+
+    const handleminus = () => {
+        if (count > 1) {
+            setCount(prev => prev - 1)
+        }
+    }
 
 
     let reviewSchema = object({
@@ -126,20 +147,23 @@ function ShopDetails(props) {
                                     <p className="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
                                     <div className="input-group quantity mb-5" style={{ width: 100 }}>
                                         <div className="input-group-btn">
-                                            <button className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                            <button onClick={() => handleminus()} className="btn btn-sm btn-minus rounded-circle bg-light border">
                                                 <i className="fa fa-minus" />
                                             </button>
                                         </div>
-                                        <input type="text" className="form-control form-control-sm text-center border-0" defaultValue={1} />
-                                        <div className="input-group-btn">
-                                            <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                        <span className="form-control form-control-sm text-center border-0" >{count}</span>                                        <div className="input-group-btn">
+                                            <button onClick={() => handlePlus()} className="btn btn-sm btn-plus rounded-circle bg-light border">
                                                 <i className="fa fa-plus" />
                                             </button>
                                         </div>
                                     </div>
-                                    <Link to={`/cart/${id}`} >
-                                        <button type='submit' className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</button>
-                                    </Link>
+
+                                    <a
+                                        onClick={hendalcart}
+                                        className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+                                        <i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart
+                                    </a>
+
                                 </div>
                                 <div className="col-lg-12">
                                     <nav>
@@ -249,7 +273,6 @@ function ShopDetails(props) {
                                 </div>
 
                                 <form onSubmit={handleSubmit}>
-
                                     <h4 className="mb-5 fw-bold">Leave a Reply</h4>
                                     <div className="row g-4">
                                         <div className="col-lg-6">
